@@ -2,7 +2,8 @@ answers = ['y', 'yes', 'n', 'no', '', 'quit', 'exit', 'done']
 
 
 def leave_check(usr_input):
-    if usr_input.lower() in answers[5:8]: quit()
+    if usr_input.lower() in answers[5:8]:
+        quit()
 
 
 while True:
@@ -34,12 +35,12 @@ def calc(even_odd):
     found = []
     if even_odd == 'even':
         for n in rng:
-            if n !=0:
+            if n != 0:
                 if n % 2 == 0:
                     found.append(n)
     elif even_odd == 'odd':
         for n in rng:
-            if n !=0:
+            if n != 0:
                 if not n % 2 == 0:
                     found.append(n)
     return found
