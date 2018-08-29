@@ -35,25 +35,21 @@ def calc(even_odd):
     found = []
     if even_odd == 'even':
         for n in rng:
-            if n != 0:
-                if n % 2 == 0:
-                    found.append(n)
+            if n != 0 and n % 2 == 0:
+                found.append(n)
     elif even_odd == 'odd':
         for n in rng:
-            if n != 0:
-                if not n % 2 == 0:
-                    found.append(n)
+            if n != 0 and not n % 2 == 0:
+                found.append(n)
     return found
 
 
 def sum_num(even_odd):
+    x = calc(even_odd)
     if ans_sum.lower() in answers[0:2]:
-        total = 0
-        for n in calc(even_odd):
-            total += n
-        print("\nThe sum of ", even_odd, " numbers is", total)
+        print("\nThe sum of ", even_odd, " numbers is", sum(x))
     if ans_num.lower() in answers[0:2]:
-        print("\nThe number of", even_odd, "numbers is", len(calc(even_odd)))
+        print("\nThe number of", even_odd, "numbers is", len(x))
 
 
 def main(even_odd):
