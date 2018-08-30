@@ -22,7 +22,7 @@ while True:
         sleep(1)
         quit()
     elif user_attempt.lower() in ['hint', 'help']:
-        print(chosen_description)
+        print('\n' + chosen_description + '\n')
     elif user_attempt == '':
         print('Invalid attempt, try again.')
     elif len(user_attempt) < len(chosen_word): # check the letters
