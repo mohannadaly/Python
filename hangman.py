@@ -4,24 +4,37 @@ words = open('hangman_words.txt', 'r').read().splitlines()
 descriptions = open('hangman_descriptions.txt', 'r').read().splitlines()
 chosen_index = choose_from(range(len(words)))
 chosen_word = words[chosen_index]
+letter_check = chosen_word.lower()
+letter_check_len = len(letter_check)
 chosen_description = descriptions[chosen_index]
 attempts = 8
+user_won = False
 print('Available attempts:', attempts)
 while True:
-    user_attempt = input('What is the word?\n').lower()
-    if user_attempt == chosen_word.lower():
-        print('The word is', chosen_word)
-        print('You Win!!! Congratulations.')
+    if letter_check_len == 0:
+        user_won = True
         break
-    elif user_attempt in chosen_word.lower():
-
-    elif user_attempt == '':
+    user_attempt = input('What is the word?\n').lower().replace(' ', '')
+    if user_attempt == '':
         print('Invalid attempt, try again.')
-    else:
-        attempts -= 1
-        if attempts > 0:
-            print('Wrong! Try again.')
-            print('Available attempts:', attempts)
-        else:
-            print('You lose! Better luck next time.')
+    elif len(user_attempt) < len(chosen_word): # check the letters
+        for each_letter in user_attempt:
+            if each_letter in letter_check:
+                letter_check = letter_check.replace(each_letter, "", 1)
+                letter_check_len -= 1
+        print('Letters to go:', letter_check_len)
+    elif len(user_attempt) >= len(chosen_word): # check the word
+        if user_attempt == chosen_word.lower():
+            user_won = True
             break
+        else:
+            if not attempts == 1:
+                attempts -= 1
+                print('Attempts to go:', attempts)
+            else:
+                user_won = False
+                break
+if user_won:
+    print('You Win!!! Congratulations.')
+else:
+    print('You lose. Better luck next time.')
