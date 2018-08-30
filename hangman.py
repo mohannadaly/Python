@@ -1,5 +1,6 @@
 # Choose a word and associate it to its descrption.
 from random import choice as choose_from
+from time import sleep
 words = open('hangman_words.txt', 'r').read().splitlines()
 descriptions = open('hangman_descriptions.txt', 'r').read().splitlines()
 chosen_index = choose_from(range(len(words)))
@@ -15,7 +16,11 @@ while True:
         user_won = True
         break
     user_attempt = input('What is the word?\n').lower().replace(' ', '')
-    if user_attempt == '':
+    if user_attempt.lower() in ['quit', 'exit', 'done']:
+        print('Quitting...')
+        sleep(1)
+        quit()
+    elif user_attempt == '':
         print('Invalid attempt, try again.')
     elif len(user_attempt) < len(chosen_word): # check the letters
         for each_letter in user_attempt:
