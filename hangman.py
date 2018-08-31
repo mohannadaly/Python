@@ -1,4 +1,5 @@
 leave_keywords = ['quit', 'exit', 'done', 'leave']
+from time import sleep
 
 # main menu function
 def main_menu():
@@ -6,13 +7,13 @@ def main_menu():
     while True:
         print('\nWelcome to Hangman.\nWhat would you like to do?(Pick a number.)\n')
         choice = input('[1] Play\n[2] Add Word\n[3] Help\n[4] Quit\n').lower()
-        if choice == '1':
+        if choice in ['1', 'play']:
             play()
             break
-        elif choice == '2':
+        elif choice in ['2', 'add word', 'add']:
             add_word()
             break
-        elif choice == '3':
+        elif choice in ['3', 'help']:
             help_user()
             break
         elif choice == '4' or choice in leave_keywords:
@@ -25,7 +26,6 @@ def main_menu():
 # play the game
 def play():
     clear()
-    from time import sleep as pause
     from random import choice as choose_from
     words = open('hangman_words.txt', 'r').read().splitlines()
     global chosen_index
@@ -68,7 +68,7 @@ def play():
         print('You Win!!! Congratulations.')
     else:
         print('You lose. Better luck next time.')
-    pause(1)
+    sleep(1)
     main_menu()
 
 
@@ -91,6 +91,7 @@ def add_word():
     words.close()
     descriptions.close()
     print('\nWord added to the word list!')
+    sleep(1)
     main_menu()
 
 # help function
@@ -115,8 +116,7 @@ def help_user():
 # quitting function
 def leave_game():
     clear()
-    from time import sleep
-    print('\nQuitting...')
+    print('\nQuitting...\n')
     sleep(1)
     clear()
     quit()
