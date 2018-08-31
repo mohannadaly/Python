@@ -89,11 +89,10 @@ def add_word():
     clear()
     words = open('words.txt', 'a')
     descriptions = open('descriptions.txt', 'a')
-    add_word = open('add_word.txt', 'r').read().splitlines()
     while True:
-        print(add_word[0])
+        print('What word would you like to add?')
         word = input('')
-        print(add_word[1])
+        print('How would you describe that word?')
         desc = input('')
         if word in reserved_words or desc in reserved_words:
             print('\nInvalid input, please try again.\n')
