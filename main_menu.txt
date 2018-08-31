@@ -1,0 +1,11 @@
+Welcome to Hangman!
+
+What would you like to do?
+
+[1] Play
+
+[2] Add a word
+
+[3] Help
+
+[4] Quit

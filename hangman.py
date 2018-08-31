@@ -5,8 +5,10 @@ from time import sleep
 def main_menu():
     clear()
     while True:
-        print('\nWelcome to Hangman.\nWhat would you like to do?(Pick a number.)\n')
-        choice = input('[1] Play\n[2] Add Word\n[3] Help\n[4] Quit\n').lower()
+        # Read main menu text from txt file
+        main_menu_text = open('main_menu.txt', 'r')
+        choice = input(main_menu_text.read() + '\n')
+        main_menu_text.close()
         if choice in ['1', 'play']:
             play()
             break
@@ -28,23 +30,30 @@ def main_menu():
 def play():
     clear()
     from random import choice as choose_from
+    # Read words and descriptions text from txt files
     words_list = open('hangman_words.txt', 'r')
     words = words_list.read().splitlines()
-    global chosen_index
+    words_list.close()
+    descriptions_list = open('hangman_descriptions.txt', 'r')
+    descriptions = descriptions_list.read().splitlines()
+    descriptions_list.close()
+    # Randomly choose a word through index
     chosen_index = choose_from(range(len(words)))
     chosen_word = words[chosen_index]
+    chosen_description = descriptions[chosen_index]
+    # Variables for the play function
     letter_check = chosen_word.lower()
     letter_check_len = len(letter_check)
     attempts = 8
     user_won = False
+    print('The word\'s description is:\n' + chosen_description + '\n')
+    print('What is the word?\n')
     while True:
         if letter_check_len == 0:
             user_won = True
             break
-        user_attempt = input('What is the word?\n').lower().replace(' ', '')
-        if user_attempt == 'hint':
-            hint()
-        elif user_attempt in leave_keywords:
+        user_attempt = input('').lower().replace(' ', '')
+        if user_attempt in leave_keywords:
             leave_game()
         elif len(user_attempt) == 0:
             print('Invalid attempt, try again.')
@@ -66,11 +75,11 @@ def play():
                 else:
                     user_won = False
                     break
+    # Game outcome
     if user_won:
         print('You Win!!! Congratulations.')
     else:
-        print('You lose. Better luck next time.')
-    words_list.close()
+        print('You lose... Better luck next time.')
     sleep(1)
     main_menu()
 
@@ -100,13 +109,11 @@ def add_word():
 # help function
 def help_user():
     clear()
-    print('NOTE : The following commands are reserved words that can not be added to the word list.\n')
-    print('List of available commands:\n')
-    print('To leave the game: quit/exit/done/leave\n')
-    print('To ask for a hint: hint\n')
-    print('To return to main menu: main\n')
-    print('To display this menu: help\n')
-    print('Type "done" when you\'re done to return to main menu.')
+    # Read help text from txt file
+    help_text = open('help.txt', 'r')
+    print(help_text.read())
+    help_text.close()
+    # Prompt for user input
     while True:
         user_input = input('')
         if user_input == 'done':
@@ -115,6 +122,7 @@ def help_user():
             leave_game()
         else:
             print('Invalid input, try again.')
+    help_text.close()
 
 
 # quitting function
@@ -126,16 +134,7 @@ def leave_game():
     quit()
 
 
-# hint function
-def hint():
-    descriptions_list = open('hangman_descriptions.txt', 'r')
-    descriptions = descriptions_list.read().splitlines()
-    chosen_description = descriptions[chosen_index]
-    print('The word\'s description is:\n' + chosen_description)
-    descriptions_list.close()
-
-
-# clear function
+# Function to clear console
 def clear():
     from os import system, name
     if name == 'nt':
