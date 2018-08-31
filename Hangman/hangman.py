@@ -1,4 +1,4 @@
-leave_keywords = ['quit', 'exit', 'done', 'leave']
+reserved_words = ['quit', 'exit', 'done', 'leave', 'main', 'help']
 from time import sleep
 
 # main menu function
@@ -8,7 +8,7 @@ def main_menu():
         # Read main menu text from txt file
         main_menu = open('main_menu.txt', 'r')
         choice = input(main_menu.read() + '\n')
-        main_menu_text.close()
+        main_menu.close()
         if choice in ['1', 'play']:
             play()
             break
@@ -18,7 +18,7 @@ def main_menu():
         elif choice in ['3', 'help']:
             help_user()
             break
-        elif choice == '4' or choice in leave_keywords:
+        elif choice == '4' or choice in reserved_words[0:4]:
             leave_game()
             break
         else:
@@ -53,7 +53,7 @@ def play():
             user_won = True
             break
         user_attempt = input('').lower().replace(' ', '')
-        if user_attempt in leave_keywords:
+        if user_attempt in reserved_words[0:4]:
             leave_game()
         elif len(user_attempt) == 0:
             print('Invalid attempt, try again.')
@@ -89,22 +89,27 @@ def add_word():
     clear()
     words = open('words.txt', 'a')
     descriptions = open('descriptions.txt', 'a')
+    add_word = open('add_word.txt', 'r').read().splitlines()
     while True:
-        word = input('What word would you like to add?: \n') + '\n'
-        desc = input('What\'s the description for this word?: \n') + '\n'
-        if word in leave_keywords or desc in leave_keywords:
-            leave_game()
-        if len(word) != 0 and len(desc) != 0:
-            break
+        print(add_word[0])
+        word = input('')
+        print(add_word[1])
+        desc = input('')
+        if word in reserved_words or desc in reserved_words:
+            print('\nInvalid input, please try again.\n')
         else:
-            print('Invalid input, please try again.')
-    words.write(word)
-    descriptions.write(desc)
-    words.close()
-    descriptions.close()
-    print('\nWord added to the word list!')
+            break
+    if not word == '' and not desc == '':
+        words.write(word + '\n')
+        descriptions.write(desc + '\n')
+        words.close()
+        descriptions.close()
+        print('\nWord added to the word list!')
+    else:
+        print('\nNo words added to the list.')
     sleep(1)
     main_menu()
+
 
 # help function
 def help_user():
@@ -112,17 +117,16 @@ def help_user():
     # Read help text from txt file
     help = open('help.txt', 'r')
     print(help.read())
-    help_text.close()
+    help.close()
     # Prompt for user input
     while True:
         user_input = input('')
         if user_input == 'done':
             main_menu()
-        elif user_input in leave_keywords:
+        elif user_input in reserved_words[0:4]:
             leave_game()
         else:
             print('Invalid input, try again.')
-    help_text.close()
 
 
 # quitting function
