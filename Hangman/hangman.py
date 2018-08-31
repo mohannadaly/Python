@@ -31,10 +31,10 @@ def play():
     clear()
     from random import choice as choose_from
     # Read words and descriptions text from txt files
-    words_list = open('hangman_words.txt', 'r')
+    words_list = open('words.txt', 'r')
     words = words_list.read().splitlines()
     words_list.close()
-    descriptions_list = open('hangman_descriptions.txt', 'r')
+    descriptions_list = open('descriptions.txt', 'r')
     descriptions = descriptions_list.read().splitlines()
     descriptions_list.close()
     # Randomly choose a word through index
@@ -87,8 +87,8 @@ def play():
 # add words
 def add_word():
     clear()
-    words = open('hangman_words.txt', 'a')
-    descriptions = open('hangman_descriptions.txt', 'a')
+    words = open('words.txt', 'a')
+    descriptions = open('descriptions.txt', 'a')
     while True:
         word = input('What word would you like to add?: \n') + '\n'
         desc = input('What\'s the description for this word?: \n') + '\n'
