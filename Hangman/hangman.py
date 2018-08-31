@@ -23,6 +23,7 @@ def main_menu():
             break
         else:
             print('Invalid Choice, try again.')
+            sleep(1)
             clear()
 
 
@@ -46,9 +47,13 @@ def play():
     letter_check_len = len(letter_check)
     attempts = 8
     user_won = False
-    print('The word\'s description is:\n' + chosen_description + '\n')
-    print('What is the word?\n')
+
+    def intro_text():
+        print('The word\'s description is:\n' + chosen_description + '\n')
+        print('What is the word?\n')
     while True:
+        if letter_check_len == len(chosen_word) and attempts == 8:
+            intro_text()
         if letter_check_len == 0:
             user_won = True
             break
@@ -57,12 +62,16 @@ def play():
             leave_game()
         elif len(user_attempt) == 0:
             print('Invalid attempt, try again.')
+            sleep(1)
+            clear()
         elif len(user_attempt) < len(chosen_word): # check the letters
             for each_letter in user_attempt:
                 if each_letter in letter_check:
                     letter_check = letter_check.replace(each_letter, "", 1)
                     letter_check_len -= 1
-            print('Letters to go:', letter_check_len)
+            clear()
+            intro_text()
+            print('Letters to go:', letter_check_len, '\n')
             continue
         elif len(user_attempt) >= len(chosen_word): # check the word
             if user_attempt == chosen_word.lower():
@@ -71,7 +80,9 @@ def play():
             else:
                 if not attempts == 1:
                     attempts -= 1
-                    print('Attempts to go:', attempts)
+                    clear()
+                    intro_text()
+                    print('Attempts to go:', attempts, '\n')
                 else:
                     user_won = False
                     break
@@ -126,6 +137,8 @@ def help_user():
             leave_game()
         else:
             print('Invalid input, try again.')
+            sleep(1)
+            help_user()
 
 
 # quitting function
