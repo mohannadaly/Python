@@ -21,6 +21,7 @@ def main_menu():
             break
         else:
             print('Invalid Choice, try again.')
+            clear()
 
 
 # play the game
