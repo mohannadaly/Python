@@ -27,7 +27,8 @@ def main_menu():
 def play():
     clear()
     from random import choice as choose_from
-    words = open('hangman_words.txt', 'r').read().splitlines()
+    words_list = open('hangman_words.txt', 'r')
+    words = words_list.read().splitlines()
     global chosen_index
     chosen_index = choose_from(range(len(words)))
     chosen_word = words[chosen_index]
@@ -68,6 +69,7 @@ def play():
         print('You Win!!! Congratulations.')
     else:
         print('You lose. Better luck next time.')
+    words_list.close()
     sleep(1)
     main_menu()
 
@@ -103,8 +105,9 @@ def help_user():
     print('To ask for a hint: hint\n')
     print('To return to main menu: main\n')
     print('To display this menu: help\n')
+    print('Type "done" when you\'re done to return to main menu.')
     while True:
-        user_input = input('Type "done" when you\'re done to return to main menu.\n').lower()
+        user_input = input('')
         if user_input == 'done':
             main_menu()
         elif user_input in leave_keywords:
@@ -124,9 +127,11 @@ def leave_game():
 
 # hint function
 def hint():
-    descriptions = open('hangman_descriptions.txt', 'r').read().splitlines()
+    descriptions_list = open('hangman_descriptions.txt', 'r')
+    descriptions = descriptions_list.read().splitlines()
     chosen_description = descriptions[chosen_index]
     print('The word\'s description is:\n' + chosen_description)
+    descriptions_list.close()
 
 
 # clear function
