@@ -6,8 +6,8 @@ def main_menu():
     clear()
     while True:
         # Read main menu text from txt file
-        main_menu_text = open('main_menu.txt', 'r')
-        choice = input(main_menu_text.read() + '\n')
+        main_menu = open('main_menu.txt', 'r')
+        choice = input(main_menu.read() + '\n')
         main_menu_text.close()
         if choice in ['1', 'play']:
             play()
@@ -110,8 +110,8 @@ def add_word():
 def help_user():
     clear()
     # Read help text from txt file
-    help_text = open('help.txt', 'r')
-    print(help_text.read())
+    help = open('help.txt', 'r')
+    print(help.read())
     help_text.close()
     # Prompt for user input
     while True:
