@@ -1,4 +1,5 @@
-reserved_words = ['quit', 'exit', 'done', 'leave', 'main', 'help']
+reserved_words = ['done', 'main', 'help']
+exit_words = ['quit', 'exit', 'leave']
 from time import sleep
 
 # main menu function
@@ -18,7 +19,7 @@ def main_menu():
         elif choice in ['3', 'help']:
             help_user()
             break
-        elif choice == '4' or choice in reserved_words[0:4]:
+        elif choice == '4' or choice in exit_words:
             leave_game()
             break
         else:
@@ -58,7 +59,7 @@ def play():
             user_won = True
             break
         user_attempt = input('').lower().replace(' ', '')
-        if user_attempt in reserved_words[0:4]:
+        if user_attempt in exit_words:
             leave_game()
         elif len(user_attempt) == 0:
             print('Invalid attempt, try again.')
@@ -104,16 +105,16 @@ def add_word():
     while True:
         print('What word would you like to add?')
         word = input('')
-        if word in reserved_words[4:6] or word.lower() in words_list:
+        if word.lower() in reserved_words or word.lower() in words_list:
             print('\nWord already exists or is a reserved word, please try again...\n')
             sleep(1.5)
             clear()
             continue
-        elif word in reserved_words[0:4]:
+        elif word in exit_words:
             leave_game()
         print('How would you describe that word?')
         desc = input('')
-        if desc in reserved_words[0:4]:
+        if desc in exit_words:
             leave_game()
         else:
             break
@@ -141,7 +142,7 @@ def help_user():
         user_input = input('')
         if user_input == 'done':
             main_menu()
-        elif user_input in reserved_words[0:4]:
+        elif user_input in exit_words:
             leave_game()
         else:
             print('Invalid input, try again.')
