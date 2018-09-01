@@ -98,15 +98,23 @@ def play():
 # add words
 def add_word():
     clear()
-    words = open('words.txt', 'a')
+    words = open('words.txt', 'r+')
+    words_list = [x.lower() for x in words.read().splitlines()]
     descriptions = open('descriptions.txt', 'a')
     while True:
         print('What word would you like to add?')
         word = input('')
+        if word in reserved_words[4:6] or word.lower() in words_list:
+            print('\nWord already exists or is a reserved word, please try again...\n')
+            sleep(1.5)
+            clear()
+            continue
+        elif word in reserved_words[0:4]:
+            leave_game()
         print('How would you describe that word?')
         desc = input('')
-        if word in reserved_words or desc in reserved_words:
-            print('\nInvalid input, please try again.\n')
+        if desc in reserved_words[0:4]:
+            leave_game()
         else:
             break
     if not word == '' and not desc == '':
