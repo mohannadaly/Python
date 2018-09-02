@@ -6,7 +6,7 @@ from time import sleep
 def main_menu():
     clear(0)
     while True:
-        read_file('master_text', 0, 6)
+        read_file('master_text', 1, 6)
         choice = input('')
         if choice in ['1', 'play']:
             play()
@@ -57,10 +57,10 @@ def play():
             leave_game()
         elif user_attempt == 'main':
             main_menu()
-        elif len(user_attempt) == 0:
+        elif user_attempt == '':
             print('Invalid attempt, try again.')
             clear(1)
-        elif len(user_attempt) < len(chosen_word)/2: # check the letters
+        elif len(user_attempt) < round((len(chosen_word)/2) + 1): # check the letters
             for each_letter in user_attempt:
                 if each_letter in letter_check:
                     letter_check = letter_check.replace(each_letter, "", 1)
@@ -98,18 +98,25 @@ def add_word():
     words_list = [x.lower() for x in words.read().splitlines()]
     descriptions = open('descriptions.txt', 'a')
     while True:
+        written = 0
         print('What word would you like to add?')
         word = input('')
         if word == '':
             print('\nNo words added to the list.')
             sleep(1)
             break
+        elif word in exit_words:
+            leave_game()
+        elif ' ' in word:
+            print('Words can\'t contain spaces, please try again...')
+            clear(1.5)
+            continue
         elif word.lower() in reserved_words or word.lower() in words_list:
             print('\nWord already exists or is a reserved word, please try again...\n')
             clear(1.5)
             continue
-        elif word in exit_words:
-            leave_game()
+        else:
+            written += 1
         print('How would you describe that word?')
         desc = input('')
         if desc == '':
@@ -118,21 +125,24 @@ def add_word():
             continue
         elif desc in exit_words:
             leave_game()
+        else:
+            written += 1
         words.write(word + '\n')
         descriptions.write(desc + '\n')
         break
+    if written == 2:
+        clear(0)
+        print('Word added!')
+        sleep(1)
     words.close()
     descriptions.close()
-    clear(0)
-    print('Word added!')
-    sleep(1)
     main_menu()
 
 
 # help function
 def help_user():
     clear(0)
-    read_file('master_text', 6, 12)
+    read_file('master_text', 7, 12)
     while True:
         user_input = input('')
         if user_input == 'main':
@@ -161,9 +171,10 @@ def read_file(file_name, begin, end):
     if end == 0:
         end = len(text_list)
     if not file_name in ['words', 'descriptions']:
-        for i in range(begin, end):
+        for i in range(begin - 1, end):
             print(text_list[i] + '\n')
-    return text_list
+    else:
+        return text_list
 
 
 # clear console
