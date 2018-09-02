@@ -4,19 +4,23 @@ from time import sleep
 
 
 # function to print main menu and help text from master text file
-def read_text(begin, end):
-    master_text = open('master_text.txt', 'r')
-    master_text_list = master_text.readlines()
-    for i in range(begin, end):
-        print(master_text_list[i] + '\n')
-    master_text.close()
+def read_file(file_name, mode, begin, end):
+    file = open(file_name + '.txt', mode)
+    text_list = file.read().splitlines()
+    file.close()
+    if end == 0:
+        end = len(text_list)
+    if not file_name in ['words', 'descriptions']:
+        for i in range(begin, end):
+            print(text_list[i] + '\n')
+    return text_list
 
 
 # main menu function
 def main_menu():
     clear(0)
     while True:
-        read_text(0, 6)
+        read_file('master_text', 'r', 0, 6)
         choice = input('')
         if choice in ['1', 'play']:
             play()
@@ -39,13 +43,8 @@ def main_menu():
 def play():
     clear(0)
     from random import choice as choose_from
-    # Read words and descriptions text from txt files
-    words_list = open('words.txt', 'r')
-    words = words_list.read().splitlines()
-    words_list.close()
-    descriptions_list = open('descriptions.txt', 'r')
-    descriptions = descriptions_list.read().splitlines()
-    descriptions_list.close()
+    words = read_file('words', 'r', 0, 0)
+    descriptions = read_file('descriptions', 'r', 0, 0)
     # Randomly choose a word through index
     chosen_index = choose_from(range(len(words)))
     chosen_word = words[chosen_index]
@@ -74,7 +73,7 @@ def play():
         elif len(user_attempt) == 0:
             print('Invalid attempt, try again.')
             clear(1)
-        elif len(user_attempt) < len(chosen_word): # check the letters
+        elif len(user_attempt) < len(chosen_word)/2: # check the letters
             for each_letter in user_attempt:
                 if each_letter in letter_check:
                     letter_check = letter_check.replace(each_letter, "", 1)
@@ -83,7 +82,7 @@ def play():
             intro_text()
             print('Letters to go:', letter_check_len, '\n')
             continue
-        elif len(user_attempt) >= len(chosen_word): # check the word
+        elif len(user_attempt) >= len(chosen_word)/2: # check the word
             if user_attempt == chosen_word.lower():
                 user_won = True
                 break
@@ -141,7 +140,7 @@ def add_word():
 # help function
 def help_user():
     clear(0)
-    read_text(6, 12)
+    read_file('master_text', 'r', 6, 12)
     # Prompt for user input
     while True:
         user_input = input('')
