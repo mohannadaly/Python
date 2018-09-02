@@ -1,11 +1,11 @@
-reserved_words = ['done', 'main', 'help']
+reserved_words = ['main', 'help']
 exit_words = ['quit', 'exit', 'leave']
 from time import sleep
 
 
 # function to print main menu and help text from master text file
-def read_file(file_name, mode, begin, end):
-    file = open(file_name + '.txt', mode)
+def read_file(file_name, begin, end):
+    file = open(file_name + '.txt', 'r')
     text_list = file.read().splitlines()
     file.close()
     if end == 0:
@@ -20,7 +20,7 @@ def read_file(file_name, mode, begin, end):
 def main_menu():
     clear(0)
     while True:
-        read_file('master_text', 'r', 0, 6)
+        read_file('master_text', 0, 6)
         choice = input('')
         if choice in ['1', 'play']:
             play()
@@ -43,8 +43,8 @@ def main_menu():
 def play():
     clear(0)
     from random import choice as choose_from
-    words = read_file('words', 'r', 0, 0)
-    descriptions = read_file('descriptions', 'r', 0, 0)
+    words = read_file('words', 0, 0)
+    descriptions = read_file('descriptions', 0, 0)
     # Randomly choose a word through index
     chosen_index = choose_from(range(len(words)))
     chosen_word = words[chosen_index]
@@ -70,6 +70,8 @@ def play():
         user_attempt = input('').lower().replace(' ', '')
         if user_attempt in exit_words:
             leave_game()
+        elif user_attempt == 'main':
+            main_menu()
         elif len(user_attempt) == 0:
             print('Invalid attempt, try again.')
             clear(1)
@@ -113,7 +115,11 @@ def add_word():
     while True:
         print('What word would you like to add?')
         word = input('')
-        if word.lower() in reserved_words or word.lower() in words_list:
+        if word == '':
+            print('\nNo words added to the list.')
+            sleep(1)
+            break
+        elif word.lower() in reserved_words or word.lower() in words_list:
             print('\nWord already exists or is a reserved word, please try again...\n')
             clear(1.5)
             continue
@@ -121,18 +127,19 @@ def add_word():
             leave_game()
         print('How would you describe that word?')
         desc = input('')
-        if desc in exit_words:
+        if desc == '':
+            print('Invalid description, please try again.')
+            clear(1.5)
+            continue
+        elif desc in exit_words:
             leave_game()
-        else:
-            break
-    if not word == '' and not desc == '':
         words.write(word + '\n')
         descriptions.write(desc + '\n')
-        words.close()
-        descriptions.close()
-        print('\nWord added to the word list!')
-    else:
-        print('\nNo words added to the list.')
+        break
+    words.close()
+    descriptions.close()
+    clear(0)
+    print('Word added!')
     sleep(1)
     main_menu()
 
@@ -140,11 +147,11 @@ def add_word():
 # help function
 def help_user():
     clear(0)
-    read_file('master_text', 'r', 6, 12)
+    read_file('master_text', 6, 12)
     # Prompt for user input
     while True:
         user_input = input('')
-        if user_input == 'done':
+        if user_input == 'main':
             main_menu()
         elif user_input in exit_words:
             leave_game()
