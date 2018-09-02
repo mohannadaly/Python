@@ -3,20 +3,6 @@ exit_words = ['quit', 'exit', 'leave']
 from time import sleep
 
 
-# function to print main menu and help text from master text file
-def read_file(file_name, begin, end):
-    file = open(file_name + '.txt', 'r')
-    text_list = file.read().splitlines()
-    file.close()
-    if end == 0:
-        end = len(text_list)
-    if not file_name in ['words', 'descriptions']:
-        for i in range(begin, end):
-            print(text_list[i] + '\n')
-    return text_list
-
-
-# main menu function
 def main_menu():
     clear(0)
     while True:
@@ -45,8 +31,7 @@ def play():
     from random import choice as choose_from
     words = read_file('words', 0, 0)
     descriptions = read_file('descriptions', 0, 0)
-    # Randomly choose a word through index
-    chosen_index = choose_from(range(len(words)))
+    chosen_index = choose_from(range(len(words))) # choose a random index
     chosen_word = words[chosen_index]
     chosen_description = descriptions[chosen_index]
     # Variables for the play function
@@ -84,7 +69,7 @@ def play():
             intro_text()
             print('Letters to go:', letter_check_len, '\n')
             continue
-        elif len(user_attempt) >= len(chosen_word)/2: # check the word
+        elif len(user_attempt) >= round((len(chosen_word)/2) + 1): # check the word
             if user_attempt == chosen_word.lower():
                 user_won = True
                 break
@@ -148,7 +133,6 @@ def add_word():
 def help_user():
     clear(0)
     read_file('master_text', 6, 12)
-    # Prompt for user input
     while True:
         user_input = input('')
         if user_input == 'main':
@@ -169,7 +153,20 @@ def leave_game():
     quit()
 
 
-# Function to clear console
+# assign text from files to variables
+def read_file(file_name, begin, end):
+    file = open(file_name + '.txt', 'r')
+    text_list = file.read().splitlines()
+    file.close()
+    if end == 0:
+        end = len(text_list)
+    if not file_name in ['words', 'descriptions']:
+        for i in range(begin, end):
+            print(text_list[i] + '\n')
+    return text_list
+
+
+# clear console
 def clear(time):
     sleep(time)
     from os import system, name
