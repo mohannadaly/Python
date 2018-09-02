@@ -14,9 +14,8 @@ def read_text(begin, end):
 
 # main menu function
 def main_menu():
-    clear()
+    clear(0)
     while True:
-        # Read main menu text from txt file
         read_text(0, 6)
         choice = input('')
         if choice in ['1', 'play']:
@@ -33,13 +32,12 @@ def main_menu():
             break
         else:
             print('Invalid Choice, try again.')
-            sleep(1)
-            clear()
+            clear(1)
 
 
 # play the game
 def play():
-    clear()
+    clear(0)
     from random import choice as choose_from
     # Read words and descriptions text from txt files
     words_list = open('words.txt', 'r')
@@ -75,14 +73,13 @@ def play():
             leave_game()
         elif len(user_attempt) == 0:
             print('Invalid attempt, try again.')
-            sleep(1)
-            clear()
+            clear(1)
         elif len(user_attempt) < len(chosen_word): # check the letters
             for each_letter in user_attempt:
                 if each_letter in letter_check:
                     letter_check = letter_check.replace(each_letter, "", 1)
                     letter_check_len -= 1
-            clear()
+            clear(0)
             intro_text()
             print('Letters to go:', letter_check_len, '\n')
             continue
@@ -93,7 +90,7 @@ def play():
             else:
                 if not attempts == 1:
                     attempts -= 1
-                    clear()
+                    clear(0)
                     intro_text()
                     print('Attempts to go:', attempts, '\n')
                 else:
@@ -110,7 +107,7 @@ def play():
 
 # add words
 def add_word():
-    clear()
+    clear(0)
     words = open('words.txt', 'r+')
     words_list = [x.lower() for x in words.read().splitlines()]
     descriptions = open('descriptions.txt', 'a')
@@ -119,8 +116,7 @@ def add_word():
         word = input('')
         if word.lower() in reserved_words or word.lower() in words_list:
             print('\nWord already exists or is a reserved word, please try again...\n')
-            sleep(1.5)
-            clear()
+            clear(1.5)
             continue
         elif word in exit_words:
             leave_game()
@@ -144,8 +140,7 @@ def add_word():
 
 # help function
 def help_user():
-    clear()
-    # Read help text from txt file
+    clear(0)
     read_text(6, 12)
     # Prompt for user input
     while True:
@@ -162,15 +157,15 @@ def help_user():
 
 # quitting function
 def leave_game():
-    clear()
+    clear(0)
     print('\nQuitting...\n')
-    sleep(1)
-    clear()
+    clear(1)
     quit()
 
 
 # Function to clear console
-def clear():
+def clear(time):
+    sleep(time)
     from os import system, name
     if name == 'nt':
         _ = system('cls')
