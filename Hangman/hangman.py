@@ -2,14 +2,23 @@ reserved_words = ['done', 'main', 'help']
 exit_words = ['quit', 'exit', 'leave']
 from time import sleep
 
+
+# function to print main menu and help text from master text file
+def read_text(begin, end):
+    master_text = open('master_text.txt', 'r')
+    master_text_list = master_text.readlines()
+    for i in range(begin, end):
+        print(master_text_list[i] + '\n')
+    master_text.close()
+
+
 # main menu function
 def main_menu():
     clear()
     while True:
         # Read main menu text from txt file
-        main_menu = open('main_menu.txt', 'r')
-        choice = input(main_menu.read() + '\n')
-        main_menu.close()
+        read_text(0, 6)
+        choice = input('')
         if choice in ['1', 'play']:
             play()
             break
@@ -49,9 +58,12 @@ def play():
     attempts = 8
     user_won = False
 
+
     def intro_text():
         print('The word\'s description is:\n' + chosen_description + '\n')
         print('What is the word?\n')
+
+
     while True:
         if letter_check_len == len(chosen_word) and attempts == 8:
             intro_text()
@@ -134,9 +146,7 @@ def add_word():
 def help_user():
     clear()
     # Read help text from txt file
-    help = open('help.txt', 'r')
-    print(help.read())
-    help.close()
+    read_text(6, 12)
     # Prompt for user input
     while True:
         user_input = input('')
