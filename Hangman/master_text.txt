@@ -9,4 +9,4 @@ List of available commands:
 To leave the game: quit/exit/done/leave
 To return to main menu: main
 To display this menu: help
-Type "done" when you're done to return to main menu.
+Type "main" when you're done to return to main menu.
