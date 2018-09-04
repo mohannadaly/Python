@@ -1,6 +1,6 @@
+from time import sleep
 reserved_words = ['main', 'help']
 exit_words = ['quit', 'exit', 'leave']
-from time import sleep
 
 
 def main_menu():
@@ -31,7 +31,7 @@ def play():
     from random import choice as choose_from
     words = read_file('words', 0, 0)
     descriptions = read_file('descriptions', 0, 0)
-    chosen_index = choose_from(range(len(words))) # choose a random index
+    chosen_index = choose_from(range(len(words)))  # choose a random index
     chosen_word = words[chosen_index]
     chosen_description = descriptions[chosen_index]
     # Variables for the play function
@@ -40,11 +40,9 @@ def play():
     attempts = 8
     user_won = False
 
-
     def intro_text():
         print('The word\'s description is:\n' + chosen_description + '\n')
         print('What is the word?\n')
-
 
     while True:
         if letter_check_len == len(chosen_word) and attempts == 8:
@@ -60,7 +58,7 @@ def play():
         elif user_attempt == '':
             print('Invalid attempt, try again.')
             clear(1)
-        elif len(user_attempt) < round((len(chosen_word)/2) + 1): # check the letters
+        elif len(user_attempt) < round((len(chosen_word)/2) + 1):  # check the letters
             for each_letter in user_attempt:
                 if each_letter in letter_check:
                     letter_check = letter_check.replace(each_letter, "", 1)
@@ -69,7 +67,7 @@ def play():
             intro_text()
             print('Letters to go:', letter_check_len, '\n')
             continue
-        elif len(user_attempt) >= round((len(chosen_word)/2) + 1): # check the word
+        elif len(user_attempt) >= round((len(chosen_word)/2) + 1):  # check the word
             if user_attempt == chosen_word.lower():
                 user_won = True
                 break
@@ -170,7 +168,7 @@ def read_file(file_name, begin, end):
     file.close()
     if end == 0:
         end = len(text_list)
-    if not file_name in ['words', 'descriptions']:
+    if file_name not in ['words', 'descriptions']:
         for i in range(begin - 1, end):
             print(text_list[i] + '\n')
     else:
@@ -182,9 +180,9 @@ def clear(time):
     sleep(time)
     from os import system, name
     if name == 'nt':
-        _ = system('cls')
+        system('cls')
     else:
-        _ = system('clear')
+        system('clear')
 
 
 main_menu()
