@@ -1,8 +1,6 @@
 from time import sleep
 reserved_words = ['main', 'help']
 exit_words = ['quit', 'exit', 'leave']
-
-
 def main_menu():
     clear(0)
     while True:
@@ -23,15 +21,14 @@ def main_menu():
         else:
             print('Invalid Choice, try again.')
             clear(1)
-
-
 # play the game
 def play():
     clear(0)
     from random import choice as choose_from
     words = read_file('words', 0, 0)
     descriptions = read_file('descriptions', 0, 0)
-    chosen_index = choose_from(range(len(words)))  # choose a random index
+    # choose a random index
+    chosen_index = choose_from(range(len(words)))
     chosen_word = words[chosen_index]
     chosen_description = descriptions[chosen_index]
     # Variables for the play function
@@ -39,11 +36,9 @@ def play():
     letter_check_len = len(letter_check)
     attempts = 8
     user_won = False
-
     def intro_text():
         print('The word\'s description is:\n' + chosen_description + '\n')
         print('What is the word?\n')
-
     while True:
         if letter_check_len == len(chosen_word) and attempts == 8:
             intro_text()
@@ -80,15 +75,12 @@ def play():
                 else:
                     user_won = False
                     break
-    # Game outcome
     if user_won:
         print('You Win!!! Congratulations.')
     else:
         print('You lose... Better luck next time.')
     sleep(1)
     main_menu()
-
-
 # add words
 def add_word():
     clear(0)
@@ -135,8 +127,6 @@ def add_word():
     words.close()
     descriptions.close()
     main_menu()
-
-
 # help function
 def help_user():
     clear(0)
@@ -151,16 +141,12 @@ def help_user():
             print('Invalid input, try again.')
             sleep(1)
             help_user()
-
-
 # quitting function
 def leave_game():
     clear(0)
     print('\nQuitting...\n')
     clear(1)
     quit()
-
-
 # assign text from files to variables
 def read_file(file_name, begin, end):
     file = open(file_name + '.txt', 'r')
@@ -173,8 +159,6 @@ def read_file(file_name, begin, end):
             print(text_list[i] + '\n')
     else:
         return text_list
-
-
 # clear console
 def clear(time):
     sleep(time)
@@ -183,6 +167,4 @@ def clear(time):
         system('cls')
     else:
         system('clear')
-
-
 main_menu()
