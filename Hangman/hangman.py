@@ -58,7 +58,7 @@ def play():
         elif user_attempt == '':
             print('Invalid attempt, try again.')
             clear(1)
-        elif len(user_attempt) < round((len(chosen_word)/2) + 1):  # check the letters
+        elif len(user_attempt) < round((len(chosen_word)/2) + 1):
             for each_letter in user_attempt:
                 if each_letter in letter_check:
                     letter_check = letter_check.replace(each_letter, "", 1)
@@ -67,7 +67,7 @@ def play():
             intro_text()
             print('Letters to go:', letter_check_len, '\n')
             continue
-        elif len(user_attempt) >= round((len(chosen_word)/2) + 1):  # check the word
+        elif len(user_attempt) >= round((len(chosen_word)/2) + 1):
             if user_attempt == chosen_word.lower():
                 user_won = True
                 break
