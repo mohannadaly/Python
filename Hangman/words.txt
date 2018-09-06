@@ -1,5 +1,5 @@
-Apple
-Banana
-Strawberry
-Watermelon
-Chocolate
+apple:It's red. It's rounded. It's a fruit. It grows on trees. It's overpriced. 5 letters.
+banana:It's yellow. It's long. It's a fruit. It grows on trees. 6 letters.
+strawberry:It's red. It's not exactly rounded. It has seeds on it. 10 letters.
+watermelon:It's green on the outside, red on the inside. 10 letters.
+chocolate:It's brown. It's sweet. It has cocoa. 9 letters.

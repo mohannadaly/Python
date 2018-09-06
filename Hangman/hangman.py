@@ -25,19 +25,16 @@ def main_menu():
 def play():
     clear(0)
     from random import choice as choose_from
-    words = read_file('words', 0, 0)
-    descriptions = read_file('descriptions', 0, 0)
-    # choose a random index
-    chosen_index = choose_from(range(len(words)))
-    chosen_word = words[chosen_index]
-    chosen_description = descriptions[chosen_index]
+    dic = words_dic()
+    chosen_word = choose_from(list(dic))
+    chosen_desc = dic[chosen_word]
     # Variables for the play function
     letter_check = chosen_word.lower()
     letter_check_len = len(letter_check)
     attempts = 8
     user_won = False
     def intro_text():
-        print('The word\'s description is:\n' + chosen_description + '\n')
+        print('The word\'s description is:\n' + chosen_desc + '\n')
         print('What is the word?\n')
     while True:
         if letter_check_len == len(chosen_word) and attempts == 8:
@@ -76,7 +73,7 @@ def play():
                     user_won = False
                     break
     if user_won:
-        print('You Win!!! Congratulations.')
+        print('\nYou Win!!! Congratulations.')
     else:
         print('You lose... Better luck next time.')
     sleep(1)
@@ -84,49 +81,36 @@ def play():
 # add words
 def add_word():
     clear(0)
-    words = open('words.txt', 'r+')
-    words_list = [x.lower() for x in words.read().splitlines()]
-    descriptions = open('descriptions.txt', 'a')
+    lis = list(words_dic())
     while True:
-        written = 0
-        print('What word would you like to add?')
-        word = input('')
-        if word == '':
-            print('\nNo words added to the list.')
-            sleep(1)
+        word = input('What word would you like to add?\n').lower().replace(' ', '')
+        if word in exit_words:
+            leave_game()
+        elif word in reserved_words or word in lis:
+            print('Word already exists or is a reserved word, try again...')
+            clear(1.5)
+            continue
+        elif word == '':
+            print('No words added!')
+            clear(1.5)
             break
-        elif word in exit_words:
+        desc = input('How would you describe that word?\n')
+        if desc in exit_words:
             leave_game()
-        elif ' ' in word:
-            print('Words can\'t contain spaces, please try again...')
+        elif desc == '':
+            print('Invalid description, try again...')
             clear(1.5)
             continue
-        elif word.lower() in reserved_words or word.lower() in words_list:
-            print('\nWord already exists or is a reserved word, please try again...\n')
-            clear(1.5)
-            continue
-        else:
-            written += 1
-        print('How would you describe that word?')
-        desc = input('')
-        if desc == '':
-            print('Invalid description, please try again.')
-            clear(1.5)
-            continue
-        elif desc in exit_words:
-            leave_game()
-        else:
-            written += 1
-        words.write(word + '\n')
-        descriptions.write(desc + '\n')
-        break
-    if written == 2:
+        words_file = open('words.txt', 'r+')
+        words_file.read()
+        words_file.write(word + ':' + desc + '\n')
+        words_file.close()
         clear(0)
-        print('Word added!')
-        sleep(1)
-    words.close()
-    descriptions.close()
+        print('Added word succuessfully!')
+        sleep(1.5)
+        break
     main_menu()
+        
 # help function
 def help_user():
     clear(0)
@@ -154,11 +138,20 @@ def read_file(file_name, begin, end):
     file.close()
     if end == 0:
         end = len(text_list)
-    if file_name not in ['words', 'descriptions']:
+    if file_name not in ['words']:
         for i in range(begin - 1, end):
             print(text_list[i] + '\n')
     else:
         return text_list
+# turn the words.txt file into a dictionary
+def words_dic():
+    words_file = open('words.txt', 'r')
+    dic = {}
+    for each_item in words_file.read().splitlines():
+        colon = each_item.index(':')
+        dic[each_item[:colon]] = each_item[colon+1:]
+    words_file.close()
+    return dic
 # clear console
 def clear(time):
     sleep(time)
