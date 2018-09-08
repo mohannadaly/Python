@@ -1,6 +1,7 @@
 from time import sleep
 reserved_words = ['main', 'help']
 exit_words = ['quit', 'exit', 'leave']
+# main menu function
 def main_menu():
     clear(0)
     while True:
@@ -28,7 +29,6 @@ def play():
     dic = words_dic()
     chosen_word = choose_from(list(dic))
     chosen_desc = dic[chosen_word]
-    # Variables for the play function
     letter_check = chosen_word.lower()
     letter_check_len = len(letter_check)
     attempts = 8
@@ -81,12 +81,12 @@ def play():
 # add words
 def add_word():
     clear(0)
-    lis = list(words_dic())
+    words_list = list(words_dic())
     while True:
         word = input('What word would you like to add?\n').lower().replace(' ', '')
         if word in exit_words:
             leave_game()
-        elif word in reserved_words or word in lis:
+        elif word in reserved_words or word in words_list:
             print('Word already exists or is a reserved word, try again...')
             clear(1.5)
             continue
@@ -109,8 +109,7 @@ def add_word():
         print('Added word succuessfully!')
         sleep(1.5)
         break
-    main_menu()
-        
+    main_menu()       
 # help function
 def help_user():
     clear(0)
