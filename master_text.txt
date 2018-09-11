@@ -1,0 +1,13 @@
+Welcome to my scripts compilation!
+Which script would you like to run?
+[1] Even/Odd Calculator
+[2] Vowels Finder
+[3] String Reverser
+[4] Help
+[5] Quit
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+List of available commands:
+To leave the program: quit/exit/done/leave
+To return to main menu: main
+To display this menu: help
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
