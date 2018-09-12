@@ -22,7 +22,6 @@ class Calculator:
                 if each_number % 2 !=0:
                     self.found.append(each_number)
         print('\nThe', self.even_odd, 'numbers are:', self.found)
-    def num_sum(self):
         if self.calc_sum:
             sum = 0
             for each_number in self.found:
@@ -51,20 +50,15 @@ class Reverser:
         return self.user_word[::-1]
 # SUB-CLASSES DEFINITIONS #
 class RangeError(Exception):
-    def emptyfunction(self):
-        print('')
+    pass
 class ExitWords(Exception):
-    def emptyfunction(self):
-        print('')
+    pass
 class AnsErr(Exception):
-    def emptyfunction(self):
-        print('')
+    pass
 class ans_main(Exception):
-    def emptyfunction(self):
-        print('')
+    pass
 class ans_help(Exception):
-    def emptyfunction(self):
-        print('')
+    pass
 # SUB-FUNCTIONS DEFINITIONS #
 def clear(time):
     sleep(time)
@@ -132,13 +126,13 @@ def calculator():
         try:
             low = round(float(input("What's the lower limit to your range?: ")))
             high = round(float(input("What's the higher limit to your range?: ")))
+            if low > high: raise RangeError
             num = input('Would you like to count the even/odd numbers?: ')
             ans_check(num)
             if num not in answers: raise AnsErr
             sums = input('Would you like to calculate the same of the even/odd numbers?: ')
             ans_check(sums)
             if sums not in answers: raise AnsErr
-            if low > high: raise RangeError
             break
         except ValueError:
             print('Invalid input, please try again...')
@@ -163,9 +157,7 @@ def calculator():
     odd = Calculator(low, high, 'odd', sums, num)
     clear(0)
     even.calculate()
-    even.num_sum()
     odd.calculate()
-    odd.num_sum()
     return_prompt()
 def vowels():
     clear(0)
