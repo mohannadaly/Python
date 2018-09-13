@@ -1,5 +1,6 @@
 # IMPORT FUNCTIONS #
 from time import sleep
+from math import ceil, floor
 # GENERAL CODE #
 answers = ['y', 'yes', 'n', 'no', 'quit', 'exit', 'done', 'leave', 'main', 'help']
 # CLASSES DEFINITIONS #
@@ -48,7 +49,7 @@ class Reverser:
         self.user_word = user_word
     def reverse_string(self):
         return self.user_word[::-1]
-# SUB-CLASSES DEFINITIONS #
+# EXCEPTIONS DEFINITIONS #
 class RangeError(Exception):
     pass
 class ExitWords(Exception):
@@ -124,9 +125,9 @@ def calculator():
     clear(0)
     while True:
         try:
-            low = round(float(input("What's the lower limit to your range?: ")))
-            high = round(float(input("What's the higher limit to your range?: ")))
-            if low > high: raise RangeError
+            low = floor(float(input("What's the lower limit to your range?: ")))
+            high = ceil(float(input("What's the higher limit to your range?: ")))
+            if low > high or low == high: raise RangeError
             num = input('Would you like to count the even/odd numbers?: ')
             ans_check(num)
             if num not in answers: raise AnsErr
